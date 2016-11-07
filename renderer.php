@@ -43,6 +43,8 @@ class block_superiframe_renderer extends plugin_renderer_base {
 
         // get the parameter if exists
         $size = optional_param('size','custom',PARAM_TEXT);
+
+        // check if the parameter is within the array of predefined parameter sets
         if( ! array_key_exists( $size , $sizes ) ){
             $size = 'custom';
         }
