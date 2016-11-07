@@ -42,3 +42,7 @@ $string['height_details'] = 'Set the default iFrame height';
 $string['pagelayout'] = 'Page Layout';
 $string['pagelayout_details'] = 'Choose the default Page Layout';
 
+$string['link_custom'] = 'Custom';
+$string['link_small'] = 'Small';
+$string['link_medium'] = 'Medium';
+$string['link_large'] = 'Large';

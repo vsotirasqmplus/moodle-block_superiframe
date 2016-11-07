@@ -48,33 +48,8 @@ class block_superiframe extends block_base {
         $this->content->footer = '';
         $this->content->text = '';
 
-        // user/index.php expect course context, so get one if page has module context.
-        $currentcontext = $this->page->context->get_course_context(false);
-
-        if (! empty($this->config->text)) {
-            $this->content->text = $this->config->text;
-        }
-
-        // 
-        $this->content = '';
-        if (empty($currentcontext)) {
-            return $this->content;
-        }
-        if ($this->page->course->id == SITEID) {
-            $this->content = new stdClass();
-            $this->content->text .= "site context";
-        }
-
-        if (! empty($this->config->text)) {
-            $this->content = new stdClass();
-            $this->content->text .= $this->config->text;
-        }
-        
-        $this->content->text .= '<br />' . get_string('welcomeuser','block_superiframe',$USER);
-
-        $this->content->text .= '<br /><a href="' . $CFG->wwwroot . 
-        	'/blocks/superiframe/view.php">' . get_string('gotosuperiframe', 'block_superiframe') . '</a>';
-
+        $renderer = $this->page->get_renderer('block_superiframe');
+        $this->content->text = $renderer->fetch_block_content();
         return $this->content;
     }
 
