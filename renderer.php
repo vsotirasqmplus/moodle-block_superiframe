@@ -42,7 +42,7 @@ class block_superiframe_renderer extends plugin_renderer_base {
         $sizes['large']     = ['width' => 900 , 'height' => 600 ] ;
 
         // get the parameter if exists
-        $size = optional_param('size','medium',PARAM_TEXT);
+        $size = optional_param('size','custom',PARAM_TEXT);
         if( ! array_key_exists( $size , $sizes ) ){
             $size = 'custom';
         }
