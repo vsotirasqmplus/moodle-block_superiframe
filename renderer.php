@@ -3,12 +3,12 @@
 class block_superiframe_renderer extends plugin_renderer_base {
    
    //Here we return all the content that the goes in the block
-   function fetch_block_content(){
+   function fetch_block_content($block_id){
        global $USER ,$CFG ;
        $content = '';
         $content .= '<br />' . get_string('welcomeuser','block_superiframe',$USER) . '<br/>';
 
-        $link = new moodle_url('/blocks/superiframe/view.php',array());
+        $link = new moodle_url('/blocks/superiframe/view.php',array('blockid' => $block_id ));
         $content .= html_writer::link($link,get_string('gotosuperiframe', 'block_superiframe') ) ;
 
         return $content ;
@@ -16,8 +16,12 @@ class block_superiframe_renderer extends plugin_renderer_base {
    }
 
     //Here we aggregate all the pieces of content of the view page and displays them
-    function display_view_page($url, $width, $height){
+    function display_view_page($url, $width, $height, $block_id ){
         global $USER;
+        ini_set('display_errors', '1');
+        error_reporting(E_ALL);
+
+        // $block_id = $this->instance->id;
         $def_config = get_config('block_superiframe');
 
         // start output to browser
@@ -53,8 +57,7 @@ class block_superiframe_renderer extends plugin_renderer_base {
         $width = $sizes[$size]['width'];
         $height = $sizes[$size]['height'];
 
-
-        echo $this->show_links($sizes);
+        echo $this->show_links( $sizes , $block_id );
 
         $iframe_attr = array();
         $iframe_attr['src'] = $url ;
@@ -63,19 +66,16 @@ class block_superiframe_renderer extends plugin_renderer_base {
         $iframe_attr['class'] = 'block_superiframe_iframe' ;
         $iframe = html_writer::tag('iframe','',$iframe_attr);
         echo '<br/><br/>' . $iframe ;
-// equivalent to 
-//        echo "<iframe src='$url' height='$height' width='$width' style='border:0'></iframe>";
  
-        //send footer out to browser
+        // send footer out to browser
         echo $this->output->footer();
     }
 
-    function show_links($sizes){
+    function show_links( $sizes , $block_id ){
         $links = '';
 
-
         foreach($sizes as $key => $value){
-            $links[] = html_writer::link( new moodle_url('/blocks/superiframe/view.php',array('size' => $key)) , get_string('link_'.$key,'block_superiframe')) ;
+            $links[] = html_writer::link( new moodle_url('/blocks/superiframe/view.php',array( 'blockid' => $block_id ,'size' => $key)) , get_string('link_'.$key,'block_superiframe')) ;
         }
 
         return html_writer::div(implode(' ',$links),'block_superiframe_sizes');

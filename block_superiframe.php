@@ -49,7 +49,7 @@ class block_superiframe extends block_base {
         $this->content->text = '';
 
         $renderer = $this->page->get_renderer('block_superiframe');
-        $this->content->text = $renderer->fetch_block_content();
+        $this->content->text = $renderer->fetch_block_content($this->instance->id);
         return $this->content;
     }
 

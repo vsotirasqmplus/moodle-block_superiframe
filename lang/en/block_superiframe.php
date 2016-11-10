@@ -48,3 +48,8 @@ $string['link_medium'] = 'Medium';
 $string['link_large'] = 'Large';
 
 $string['size'] = 'Size';
+
+$string['custom'] = 'Custom';
+$string['small'] = 'Small';
+$string['medium'] = 'Medium';
+$string['large'] = 'Large' ;

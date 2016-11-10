@@ -17,5 +17,15 @@ class block_superiframe_edit_form extends block_edit_form {
         $mform->setDefault('config_url',$config->url);
         $mform->setType('config_ulr',PARAM_URL);
 
+        // size element
+        $sizes = array(
+            'custom' => get_string('custom','block_superiframe'),
+            'small' => get_string('small','block_superiframe'),
+            'medium' => get_string('medium','block_superiframe'),
+            'large' => get_string('large','block_superiframe')
+        );
+        $mform->addElement('select','config_size',get_string('size','block_superiframe'),$sizes );
+        $mform->setDefault('config_size','custom');
+
     }
 }
