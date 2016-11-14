@@ -3,23 +3,44 @@
 class block_superiframe_renderer extends plugin_renderer_base {
    
    //Here we return all the content that the goes in the block
-   function fetch_block_content($block_id){
-       global $USER ,$CFG ;
-       $content = '';
+    /**
+     * @param $block_id
+     *
+     * @return string
+     */
+    public function fetch_block_content($block_id){
+        global $USER ,$DB;
+        $def_config = get_config('block_superiframe');
+        try {
+            $configdata = $DB->get_field('block_instances','configdata',array('id' => $block_id));
+            if($configdata){
+                $config = unserialize(base64_decode($configdata));
+            }
+        } catch (\Exception $e ) {
+            $config = $def_config;
+        }
+
+        $content = '';
         $content .= '<br />' . get_string('welcomeuser','block_superiframe',$USER) . '<br/>';
 
         $link = new moodle_url('/blocks/superiframe/view.php',array('blockid' => $block_id ));
-        $content .= html_writer::link($link,get_string('gotosuperiframe', 'block_superiframe') ) ;
+        $content .= html_writer::link( $link , get_string('gotosuperiframe', 'block_superiframe') , array('title' => $config->url ) ) ;
+        $content .= '<br/>(' . $config->url . ')';
 
         return $content ;
-  
    }
 
     //Here we aggregate all the pieces of content of the view page and displays them
-    function display_view_page($url, $width, $height, $block_id ){
-        global $USER;
-        ini_set('display_errors', '1');
-        error_reporting(E_ALL);
+    /**
+     * @param $url
+     * @param $width
+     * @param $height
+     * @param $block_id
+     */
+    public function display_view_page($url, $width, $height, $block_id ){
+        global $USER , $PAGE;
+        // ini_set('display_errors', '1');
+        // error_reporting(E_ALL);
 
         // $block_id = $this->instance->id;
         $def_config = get_config('block_superiframe');
@@ -27,14 +48,17 @@ class block_superiframe_renderer extends plugin_renderer_base {
         // start output to browser
         echo $this->output->header();
 
-        // create a link to the user's list of entries in this glossary
-        $userpicture = $this->output->user_picture($USER, array('size'=>65));
-        $elementUrl = new moodle_url('/user/view.php', array('id' => $USER->id));
-        $elementLink = html_writer::link($elementUrl,$userpicture);
 
-        echo '<br/>' . fullname($USER);
-        echo '<br/>' . $elementLink;
-        // show the heading 
+        if(has_capability('block/superiframe:seeuserdetail' , $PAGE->context )){
+            // create a link to the user's list of entries in this glossary
+            $userpicture = $this->output->user_picture($USER, array('size'=>65));
+            $elementUrl = new moodle_url('/user/view.php', array('id' => $USER->id));
+            $elementLink = html_writer::link($elementUrl,$userpicture);
+            echo '<br/>' . fullname($USER);
+            echo '<br/>' . $elementLink;
+
+        }
+        // show the heading
         echo $this->output->heading(get_string('pluginname', 'block_superiframe'),5);
 
         echo '<br/>';
@@ -71,7 +95,13 @@ class block_superiframe_renderer extends plugin_renderer_base {
         echo $this->output->footer();
     }
 
-    function show_links( $sizes , $block_id ){
+    /**
+     * @param $sizes
+     * @param $block_id
+     *
+     * @return string
+     */
+    private function show_links($sizes , $block_id ){
         $links = '';
 
         foreach($sizes as $key => $value){

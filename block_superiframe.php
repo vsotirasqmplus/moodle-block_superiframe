@@ -26,11 +26,17 @@ defined('MOODLE_INTERNAL') || die();
 
 class block_superiframe extends block_base {
 
-    function init() {
+    /**
+     *
+     */
+    public function init() {
         $this->title = get_string('pluginname', 'block_superiframe');
     }
 
-    function get_content() {
+    /**
+     * @return \stdClass|\stdObject|string
+     */
+    public function get_content() {
         global $CFG, $OUTPUT, $USER;
 
         if ($this->content !== null) {
@@ -54,6 +60,9 @@ class block_superiframe extends block_base {
     }
 
     // my moodle can only have SITEID and it's redundant here, so take it away
+    /**
+     * @return array
+     */
     public function applicable_formats() {
         return array('all' => false,
                      'site' => true,
@@ -64,12 +73,21 @@ class block_superiframe extends block_base {
                      'mod-quiz' => false);
     }
 
+    /**
+     * @return bool
+     */
     public function instance_allow_multiple() {
           return true;
     }
 
-    function has_config() {return true;}
+    /**
+     * @return bool
+     */
+    public function has_config() {return true;}
 
+    /**
+     * @return bool
+     */
     public function cron() {
             mtrace( "Hey, my cron script is running" );
              

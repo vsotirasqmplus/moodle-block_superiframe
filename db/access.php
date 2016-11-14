@@ -48,4 +48,23 @@ $capabilities = array(
 
         'clonepermissionsfrom' => 'moodle/site:manageblocks'
     ),
+
+    'block/superiframe:seeiframe' => array(
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_BLOCK ,
+        'archetypes' => array(
+            'teacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW
+        )
+
+    ),
+
+    'block/superiframe:seeuserdetail' => array(
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        )
+    )
 );

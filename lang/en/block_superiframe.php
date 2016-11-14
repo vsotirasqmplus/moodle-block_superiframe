@@ -53,3 +53,7 @@ $string['custom'] = 'Custom';
 $string['small'] = 'Small';
 $string['medium'] = 'Medium';
 $string['large'] = 'Large' ;
+
+$string['superiframe:seeuserdetail'] = 'See User Details';
+$string['superiframe:seeiframe'] = 'See Super iFrame';
+
