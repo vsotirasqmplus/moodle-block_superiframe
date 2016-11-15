@@ -1,12 +1,11 @@
 <?php
-        ini_set('display_errors', '1');
-        error_reporting(E_ALL);
- 
 require('../../config.php');
 require_once('../../lib/moodlelib.php');
- 
+
 require_login();
- 
+
+global $DB, $USER, $CONFIG, $SITE ,$COURSE ;
+
 //get our config
 $def_config = get_config('block_superiframe');
 $block_id = required_param('blockid',PARAM_INT);
@@ -31,7 +30,8 @@ try {
     $config = $def_config;    
 }
 
-$size = $config->size ;
+/*
+ * $size = $config->size ;
 $sizes = array();
 $sizes['custom']    = ['width' => $def_config->width , 'height' => $def_config->height ] ;
 $sizes['small']     = ['width' => 300 , 'height' => 200 ] ;
@@ -46,6 +46,8 @@ if( ! array_key_exists( $size , $sizes ) ){
 $width = $sizes[$size]['width'];
 $height = $sizes[$size]['height'];
 
-$renderer->display_view_page($config->url , $width , $height, $block_id );
+*/
+
+$renderer->display_view_page( $config->url , $block_id );
 return;
     

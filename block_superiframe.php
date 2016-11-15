@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 class block_superiframe extends block_base {
 
     /**
-     *
+     * initialise
      */
     public function init() {
         $this->title = get_string('pluginname', 'block_superiframe');
@@ -37,7 +37,7 @@ class block_superiframe extends block_base {
      * @return \stdClass|\stdObject|string
      */
     public function get_content() {
-        global $CFG, $OUTPUT, $USER;
+        // global $CFG, $OUTPUT, $USER;
 
         if ($this->content !== null) {
             return $this->content;
