@@ -4,7 +4,7 @@ require_once('../../lib/moodlelib.php');
 
 require_login();
 
-global $DB, $USER, $CONFIG, $SITE ,$COURSE ;
+global $DB, $USER, $CONFIG, $SITE ,$COURSE , $PAGE ;
 
 //get our config
 $def_config = get_config('block_superiframe');
@@ -12,7 +12,7 @@ $block_id = required_param('blockid',PARAM_INT);
  
 $usercontext = context_user::instance($USER->id);
 $PAGE->set_course($COURSE);
-$PAGE->set_url('/blocks/superiframe/view.php',array('blockid' => $block_id ));
+$PAGE->set_url('/blocks/superiframe/view.php');
 $PAGE->set_heading($SITE->fullname);
 $PAGE->set_pagelayout($def_config->pagelayout);
 $PAGE->set_title(get_string('pluginname', 'block_superiframe'));
